@@ -1,0 +1,15 @@
+{
+    "name": "daniil/social-network-highload",
+    "autoload": {
+        "psr-4": {
+            "Daniil\\SocialNetworkHighload\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Daniil Tkachenko",
+            "email": "daniil_26062000@mail.ru"
+        }
+    ],
+    "require": {}
+}
