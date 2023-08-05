@@ -2,7 +2,7 @@
     "name": "daniil/social-network-highload",
     "autoload": {
         "psr-4": {
-            "Daniil\\SocialNetworkHighload\\": "src/"
+            "Src\\": "src/"
         }
     },
     "authors": [
@@ -11,5 +11,11 @@
             "email": "daniil_26062000@mail.ru"
         }
     ],
-    "require": {}
+    "require": {
+        "davedevelopment/phpmig": "^1.7",
+        "vlucas/phpdotenv": "^5.5",
+        "miladrahimi/phprouter": "^5.1",
+        "lcobucci/jwt": "^5.0",
+        "lcobucci/clock": "^3.1"
+    }
 }

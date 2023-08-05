@@ -1,0 +1,72 @@
+version: '3.8'
+networks:
+    app-network:
+        driver: bridge
+volumes:
+    mysql:
+        driver: local
+
+services:
+    nginx:
+        build:
+            context: ./.docker/nginx
+            dockerfile: DockerFile
+        restart: always
+        ports:
+            - "8098:80"
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - app-network
+
+    php-fpm:
+        build:
+            context: ./.docker/php-fpm
+            dockerfile: DockerFile
+        restart: always
+        depends_on:
+            - mysql
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - app-network
+
+
+    mysql:
+        image: mariadb
+        restart: always
+        ports:
+            - "8097:3306"
+        environment:
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ROOT_HOST: '%'
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        networks:
+            - app-network
+        volumes:
+            - 'mysql:/var/lib/mysql'
+        healthcheck:
+            test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
+            retries: 3
+            timeout: 5s
+
+    phpmyadmin:
+        image: phpmyadmin
+        restart: always
+        depends_on:
+          - mysql
+        ports:
+          - "8096:80"
+        environment:
+          PMA_ARBITRARY: 1
+          PMA_HOST: 'mysql'
+          PMA_USER: 'root'
+          PMA_PASSWORD: '${DB_PASSWORD}'
+        networks:
+          - app-network
+
+

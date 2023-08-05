@@ -1,0 +1,19 @@
+FROM php:8.2-fpm-alpine
+
+USER root
+
+RUN curl -sSLf \
+        -o /usr/local/bin/install-php-extensions \
+        https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions && \
+    chmod +x /usr/local/bin/install-php-extensions && \
+    install-php-extensions gd xdebug pdo pdo_mysql \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# COPY php-fpm.conf /usr/local/etc/php-fpm.conf
+# COPY php.ini /usr/local/etc/php/php.ini
+
+# Expose port 9000 and start php-fpm server
+EXPOSE 9000
+
+# Set working directory
+WORKDIR /var/www/html
