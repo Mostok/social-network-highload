@@ -11,10 +11,10 @@ class AddUsersTable extends Migration
     {
         $sql = "
             create table if not exists users (
-                id INT PRIMARY KEY,
+                id INT PRIMARY KEY AUTO_INCREMENT,
                 first_name VARCHAR(255),
                 second_name VARCHAR(255),
-                age int(3),
+                birthdate DATE,
                 sex VARCHAR(1),
                 biography VARCHAR(255),
                 city VARCHAR(255),

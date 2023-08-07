@@ -3,6 +3,7 @@
 use MiladRahimi\PhpRouter\Router;
 use MiladRahimi\PhpRouter\View\View;
 use Src\Controllers\LoginController;
+use Src\Controllers\UsersController;
 use Src\Middlewares\ApiMiddleware;
 use Src\Middlewares\AuthMiddleware;
 
@@ -17,11 +18,13 @@ $router->get('/', function (View $view) {
 
 $router->group(['middleware' => [ApiMiddleware::class], 'prefix' => '/api'], function (Router $router) {
     $router->post('/login', [LoginController::class, 'login']);
-    $router->group(['middleware' => [AuthMiddleware::class]], function (Router $router) {
-        $router->get('/post/feed', function () {
-            return "The content of post";
-        });
-    });
+    $router->post('/user/register', [LoginController::class, 'register']);
+    $router->get('/user/get/{id}', [UsersController::class, 'show']);
+//    $router->group(['middleware' => [AuthMiddleware::class]], function (Router $router) {
+//        $router->get('/post/feed', function () {
+//            return "The content of post";
+//        });
+//    });
 });
 
 

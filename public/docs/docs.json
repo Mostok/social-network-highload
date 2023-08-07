@@ -75,10 +75,9 @@
                     "type": "string",
                     "example": "Фамилия"
                   },
-                  "age": {
-                    "deprecated": true,
-                    "type": "integer",
-                    "example": 18
+                  "sex": {
+                    "type": "string",
+                    "example": "M"
                   },
                   "birthdate": {
                     "$ref": "#/components/schemas/BirthDate"
